@@ -81,7 +81,7 @@ async function readData(query) {
 function showRecipe(recipe) {
   let innerSection = ''
   innerSection += `<article>
-                    <h3>Receptets namn</h3>
+                    <h3>${recipe.name}</h3>
 
                     <img src="${recipe.image}" alt="${recipe.name}">
 
@@ -94,15 +94,22 @@ function showRecipe(recipe) {
 
                     <h4>Ingredients</h4>
                     <ul>
-                        <li>Ingredient 1</li>
-                        <li>Ingredient 2</li>
+                    ${getIngredients(recipe.ingredients)}
                     </ul>
-
                     <h4>Instructions</h4>
                     <ol>
-                        <li>First step.</li>
-                        <li>Second step.</li>
+                        ${getInstruction(recipe.instruction)}
                     </ol>
                 </article>`
   recipeOutput.innerHTML = innerSection
+}
+// Ta emot array med ingrediens och omvandla den till HTML-sträng med <li> tag
+function getIngredients(ingredientsArray = []) {
+  return ingredientsArray.map((ingredient) => `<li>${ingredient}</li>`).join('')
+}
+// Ta emot array med instruktion och omvandla den till HTML-sträng med <li>tag
+function getInstruction(instructionsArray = []) {
+  return instructionsArray
+    .map((instruction) => `<li>${instruction}</li>`)
+    .join('')
 }
