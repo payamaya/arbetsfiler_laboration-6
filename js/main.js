@@ -73,4 +73,36 @@ async function readData(query) {
   console.log('recipes :>> ', data.recipes[0])
   // Visa första Receptet som skapas och lägg till i DOM
   // showRecipe()
+  showRecipe(data.recipes[0])
+}
+
+// caloriesPerServing  difficulty   instructions   ingredients   cookTimeMinutes  prepTimeMinutes    name
+
+function showRecipe(recipe) {
+  let innerSection = ''
+  innerSection += `<article>
+                    <h3>Receptets namn</h3>
+
+                    <img src="${recipe.image}" alt="${recipe.name}">
+
+                    <div class="recipe-info">
+                        <p><strong>Servings:</strong> ${recipe.servings}</p>
+                        <p><strong>Prep time:</strong> ${recipe.prepTimeMinutes} minutes</p>
+                        <p><strong>Cooking time:</strong> ${recipe.cookTimeMinutes} minutes</p>
+                        <p><strong>Difficulty:</strong> ${recipe.difficulty}</p>
+                    </div>
+
+                    <h4>Ingredients</h4>
+                    <ul>
+                        <li>Ingredient 1</li>
+                        <li>Ingredient 2</li>
+                    </ul>
+
+                    <h4>Instructions</h4>
+                    <ol>
+                        <li>First step.</li>
+                        <li>Second step.</li>
+                    </ol>
+                </article>`
+  recipeOutput.innerHTML = innerSection
 }
