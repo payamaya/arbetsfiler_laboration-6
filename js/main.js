@@ -9,6 +9,10 @@ const searchInput = document.querySelector('#search')
 const searchButton = document.querySelector('#searchbutton')
 
 const errorMessage = document.querySelector('#error')
+const apiMessage = document.querySelector('#message')
+const recipeOutput = document.querySelector('#recipe')
+
+const API_URL = `https://dummyjson.com/recipes`
 
 /**
  * Validera formulärt inmatning
@@ -43,4 +47,30 @@ form.addEventListener('submit', (e) => {
     console.log('Is From valid :>> ', isValid)
     return
   }
+  const searchQuery = searchInput.value.trim()
+  readData(searchQuery)
 })
+// Hantera API-svaret
+async function getData(query) {
+  const response = await fetch(`${API_URL}/search?q=${query}`)
+  // Konvertera json till javascript objekt
+  const data = await response.json()
+  return data
+}
+// Ta emot sökordet och plocka rätt data från API-et
+async function readData(query) {
+  // Rensa gamla sökreultat när ny sökningen sker
+  recipeOutput.innerHTML = ''
+  apiMessage.textContent = '' // Rensa gamla fel meddelande
+
+  const data = await getData(query)
+
+  if (!data.recipes || data.recipes.length === 0) {
+    apiMessage.textContent = 'Inget recept hittades. prova en ny sökfras...'
+    return
+  }
+
+  console.log('recipes :>> ', data.recipes[0])
+  // Visa första Receptet som skapas och lägg till i DOM
+  // showRecipe()
+}
